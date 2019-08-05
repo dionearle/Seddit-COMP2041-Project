@@ -1,4 +1,9 @@
+import removeMainHTML from './removeMain.js';
+
 export default function body() {
+
+    // tear down function which removes the HTML elements of the body
+    removeMainHTML();
 
     // setup function which creates the HTML elements of the body
     setupBodyHTML();
@@ -72,14 +77,8 @@ function setupBodyHTML() {
         content.appendChild(postAuthor);
     }
 
-    // finally we add the footer element
-    const footer = document.createElement('footer');
-    const footerText = document.createElement('p');
-    footerText.textContent = 'Seddit';
-    footer.appendChild(footerText);
-
-    // once all the elements are setup, we append it to the
-    // already existing root HTML element
-    root.appendChild(main);
-    root.appendChild(footer);
+    // once all the elements are setup, we add it before
+    // the footer element within the HTMLs
+    const footer = document.getElementById('footer');
+    root.insertBefore(main, footer);
 }

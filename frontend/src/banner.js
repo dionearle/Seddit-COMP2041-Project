@@ -1,4 +1,5 @@
 import handleLoginButton from './login.js'; 
+import handleSignupButton from './signup.js'; 
 
 export default function banner() {
 
@@ -8,6 +9,10 @@ export default function banner() {
     // we want to add an event listener for the login button
     const loginButton = document.getElementById('login-button');
     loginButton.addEventListener('click', handleLoginButton);
+
+    // we also want to add an event listener for the signup button
+    const signupButton = document.getElementById('signup-button');
+    signupButton.addEventListener('click', handleSignupButton);
 }
 
 // simply sets up the HTML for the banner section of the page
@@ -66,6 +71,7 @@ function setupBannerHTML() {
     outerSignup.classList.add('nav-item');
 
     const signup = document.createElement('button');
+    signup.id = 'signup-button';
     signup.setAttribute('data-id-signup', "");
     signup.classList.add('button', 'button-secondary');
     signup.textContent = 'Sign Up';

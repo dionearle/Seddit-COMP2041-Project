@@ -1,3 +1,5 @@
+import setupFeed from './body.js';
+
 export default function handleLoginForm() {
 
     // here we grab the login form
@@ -25,11 +27,14 @@ function checkLogin(username, password) {
     // if these checks succeeded, the user can log in
     } else {
         alert('Login successful');
+
+        // we now want to setup the feed for the page
+        setupFeed();
     } 
 }
 
 // ensures the given username and password are valid
 function validatePassword(username, password) {
     // here we would validate the username and password!
-    return false;
+    return true;
 }

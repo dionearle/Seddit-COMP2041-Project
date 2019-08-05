@@ -111,6 +111,7 @@ footer > * {
   list-style-type: none;
 }
 
+#signup,
 #login,
 #feed {
   min-width: 500px;
@@ -120,12 +121,14 @@ footer > * {
   padding: 0;
 }
 
+.signup-header,
 .login-header,
 .feed-header {
   display: flex;
   justify-content: space-between;
 }
 
+.signup-title,
 .login-title,
 .feed-title {
   font-weight: normal;
@@ -133,6 +136,7 @@ footer > * {
 }
 
 /* Add your styles here */
+.signupBox,
 .loginBox {
   display: flex;
   overflow: hidden;
@@ -147,6 +151,7 @@ footer > * {
   align-items: left;
 }
 
+.signup-form,
 .login-form {
   display: flex;
   flex-direction: column;
@@ -156,6 +161,7 @@ footer > * {
   margin: 20px auto;
 }
 
+.signup-title,
 .login-title {
   padding-bottom: 10px;
   margin: 0;

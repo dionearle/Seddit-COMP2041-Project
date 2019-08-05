@@ -1,12 +1,15 @@
 import handleLoginForm from './loginForm.js'; 
+import removeMainHTML from './removeMain.js';
 
 export default function login() {
 
-    // tear down function which removes the HTML elements of the banner
-    removeFeedHTML();
+    // tear down function which removes the HTML elements of the body
+    removeMainHTML();
 
     // setup function to create the HTML elements of a login page
     setupLoginHTML();
+
+    // finally we want to create the HTML element for the footer
 
     // here we setup an event listener for when the login
     // form is completed
@@ -20,22 +23,15 @@ export default function login() {
     });
 }
 
-// removes the HTML for the feed section of the page
-function removeFeedHTML() {
-
-    // we obtain the main element of the page
-    const main = document.querySelector('main');
-
-    // then we simply get the feed element and remove it as a child from main
-    const feed = document.getElementById('feed');
-    main.removeChild(feed);
-}
-
 // simply sets up the HTML for the login section of the page
 function setupLoginHTML() {
 
-    // we obtain the main element of the page
-    const main = document.querySelector('main');
+    // we first retrieve the existing root HTML element
+    const root = document.getElementById('root');
+
+    // setting up the outer main class
+    const main = document.createElement('main');
+    main.setAttribute('role', 'main');
 
     // setting up the login element within main
     const login = document.createElement('div');
@@ -90,4 +86,9 @@ function setupLoginHTML() {
     loginFormSubmit.type = 'submit';
     loginFormSubmit.value = 'Login';
     loginForm.appendChild(loginFormSubmit);
+
+    // once all the elements are setup, we add it before
+    // the footer element within the HTMLs
+    const footer = document.getElementById('footer');
+    root.insertBefore(main, footer);
 }

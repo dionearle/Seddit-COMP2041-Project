@@ -7,6 +7,7 @@
 // import your own scripts here.
 import banner from './banner.js'; 
 import body from './body.js';
+import footer from './footer.js';
 
 // your app must take an apiUrl as an argument --
 // this will allow us to verify your apps behaviour with 
@@ -14,6 +15,7 @@ import body from './body.js';
 function initApp(apiUrl) {
   // your app initialisation goes here
   banner();
+  footer();
   body();
 }
 
