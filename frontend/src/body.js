@@ -1,10 +1,11 @@
 export default function body() {
 
     // setup function which creates the HTML elements of the body
-    setupBody();
+    setupBodyHTML();
 }
 
-function setupBody() {
+// simply sets up the HTML for the body section of the page
+function setupBodyHTML() {
 
     // we first retrieve the existing root HTML element
     const root = document.getElementById('root');
