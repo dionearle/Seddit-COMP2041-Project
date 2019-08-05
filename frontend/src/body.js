@@ -81,5 +81,4 @@ function setupBody() {
     // already existing root HTML element
     root.appendChild(main);
     root.appendChild(footer);
-
 }
