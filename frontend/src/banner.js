@@ -46,8 +46,7 @@ function setupBanner() {
     outerLogin.classList.add('nav-item');
 
     const login = document.createElement('button');
-    login.dataset['idLogin'] = "";
-    //login.setAttribute('data-id-login', "");
+    login.setAttribute('data-id-login', "");
     login.classList.add('button', 'button-primary');
     login.textContent = 'Log In';
     
@@ -69,6 +68,4 @@ function setupBanner() {
     // once all the elements are setup, we append it to the
     // already existing root HTML element
     root.appendChild(banner);
-
-    console.log('help');
 }

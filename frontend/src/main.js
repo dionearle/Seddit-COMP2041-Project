@@ -6,6 +6,7 @@
 
 // import your own scripts here.
 import banner from './banner.js'; 
+import body from './body.js'
 
 // your app must take an apiUrl as an argument --
 // this will allow us to verify your apps behaviour with 
@@ -13,6 +14,7 @@ import banner from './banner.js';
 function initApp(apiUrl) {
   // your app initialisation goes here
   banner();
+  body();
 }
 
 export default initApp;
