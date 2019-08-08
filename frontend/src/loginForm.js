@@ -51,6 +51,11 @@ function validateLogin(username, password) {
         // we alert the user that they successfully logged in
         alert('Login Successful');
 
+        // since a token is returned which needs to be used later,
+        // we want to store this in local storage
+        const token = response.token;
+        localStorage.setItem('token', token);
+
         // we now want to setup the feed for the page
         setupFeed();
     })
