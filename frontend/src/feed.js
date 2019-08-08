@@ -12,7 +12,8 @@ export default function feed(feed) {
             // feed.appendChild(post);
         }
     }); */
-    fetch('test').then(r=>r.text()).then(r => console.log(r));
+
+    //fetch('test').then(r=>r.text()).then(r => console.log(r));
 }
 
 // simply sets up the HTML for the given post object
