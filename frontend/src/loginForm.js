@@ -1,19 +1,6 @@
 import setupFeed from './body.js';
 import API_URL from './backend_url.js';
 
-const payload = {
-    'username': '',
-    'password': ''
-}
-
-const options = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload)
-}
-
 export default function handleLoginForm() {
 
     // here we grab the login form
@@ -24,28 +11,36 @@ export default function handleLoginForm() {
     const password = loginForm.elements.password.value;
 
     // here we validate the information entered for the input
-    validatePassword(username, password);
+    validateLogin(username, password);
 }
 
 // ensures the given username and password are valid
-function validatePassword(username, password) {
+function validateLogin(username, password) {
 
-    payload.username = username;
-    payload.password = password;
+    const payload = {
+        "username": `${username}`,
+        "password": `${password}`
+    }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    }
 
     // we use auth/login to authenticate this login
     fetch(`${API_URL}/auth/login`, options)
-    .then(response =>  {
-        console.log(response);
-        return response.json();
-    })
+    .then(response =>  response.json())
     .then(response => {
 
-        alert(response.message);
-
-        if (response.message === 'Success') {
+        if (response.message === undefined) {
+            alert('Success');
             // we now want to setup the feed for the page
             setupFeed();
+        } else {
+            alert(response.message); 
         }
     });
 }

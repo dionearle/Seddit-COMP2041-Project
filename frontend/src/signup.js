@@ -87,6 +87,20 @@ function setupSignupHTML() {
     signupFormPassword2.name = 'password2';
     signupForm.appendChild(signupFormPassword2);
 
+    // next we ask for the user's email
+    const signupFormEmail = document.createElement('input');
+    signupFormEmail.placeholder = 'Email Address';
+    signupFormEmail.type = 'text';
+    signupFormEmail.name = 'email';
+    signupForm.appendChild(signupFormEmail);
+
+    // the user's name is the last piece of input for the form
+    const signupFormName = document.createElement('input');
+    signupFormName.placeholder = 'Name';
+    signupFormName.type = 'text';
+    signupFormName.name = 'name';
+    signupForm.appendChild(signupFormName);
+
     // finally we have a submit button for the form
     const signupFormSubmit = document.createElement('input');
     signupFormSubmit.type = 'submit';
