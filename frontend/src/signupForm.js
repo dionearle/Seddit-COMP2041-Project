@@ -58,17 +58,31 @@ function validateSignup(username, password, email, name) {
         body: JSON.stringify(payload)
     }
 
-    // we use auth/login to authenticate this login
+    // we use auth/signup to authenticate this login
     fetch(`${API_URL}/auth/signup`, options)
-    .then(response =>  response.json())
-    .then(response => {
+    .then(response =>  {
         
-        if (response.message === undefined) {
-            alert('Success');
-            // we now want to setup the feed for the page
-            setupFeed();
-        } else {
-            alert(response.message); 
+        // if we did not recieve a success message, we
+        // want to throw an error to handle this behaviour
+        if (response.status !== 200) {
+            throw new Error();
         }
+
+        // otherwise we return the json object
+        return response.json();
+    })
+    // if it was a successful fetch, we handle it here
+    .then(response => {
+
+        // we alert the user that they successfully signed up
+        alert('Signup Successful');
+
+        // we now want to setup the feed for the page
+        setupFeed();
+    })
+     // if the fetch returned an error, we handle it here
+    .catch(() => {
+        // we simply alert the user that the signup attempt failed
+        alert('Username Taken');
     });
 }

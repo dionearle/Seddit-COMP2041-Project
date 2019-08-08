@@ -17,11 +17,13 @@ export default function handleLoginForm() {
 // ensures the given username and password are valid
 function validateLogin(username, password) {
 
+    // we construct a payload from the given username and password
     const payload = {
         "username": `${username}`,
         "password": `${password}`
     }
 
+    // we also setup the options for our fetch request
     const options = {
         method: 'POST',
         headers: {
@@ -32,15 +34,29 @@ function validateLogin(username, password) {
 
     // we use auth/login to authenticate this login
     fetch(`${API_URL}/auth/login`, options)
-    .then(response =>  response.json())
+    .then(response =>  {
+        
+        // if we did not recieve a success message, we
+        // want to throw an error to handle this behaviour
+        if (response.status !== 200) {
+            throw new Error();
+        }
+
+        // otherwise we return the json object
+        return response.json();
+    })
+    // if it was a successful fetch, we handle it here
     .then(response => {
 
-        if (response.message === undefined) {
-            alert('Success');
-            // we now want to setup the feed for the page
-            setupFeed();
-        } else {
-            alert(response.message); 
-        }
+        // we alert the user that they successfully logged in
+        alert('Login Successful');
+
+        // we now want to setup the feed for the page
+        setupFeed();
+    })
+    // if the fetch returned an error, we handle it here
+    .catch(() => {
+        // we simply alert the user that the login attempt failed
+        alert('Invalid Username or Password');
     });
 }
