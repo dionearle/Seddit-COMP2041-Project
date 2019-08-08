@@ -21,6 +21,9 @@ export default function handleSignupForm() {
 // validates user input for the signup form
 function validateInput(username, password1, password2, email, name) {
 
+    // we will use this regular expression to test for valid email addresses
+    const emailFormat = /\S+@\S+\.\S+/;
+
     // if the username or password fields were empty,
     // we inform the user
     if (username === '' || password1 === '' || password2 === ''
@@ -30,9 +33,8 @@ function validateInput(username, password1, password2, email, name) {
     // given are equal
     } else if (password1 !== password2) {
         alert('Passwords don\'t match');
-    // TODO: we finally want to check the email is in the correct form
-    // USE REGEX!
-    } else if (0 === 1) {
+    // we finally want to check the email is in the correct format
+    } else if (!emailFormat.test(email)) {
         alert('Not a valid email address');
     // if these checks succeeded, then we will attempt to sign up
     } else {
