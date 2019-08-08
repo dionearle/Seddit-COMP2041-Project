@@ -9,8 +9,6 @@ export default function login() {
     // setup function to create the HTML elements of a login page
     setupLoginHTML();
 
-    // finally we want to create the HTML element for the footer
-
     // here we setup an event listener for when the login
     // form is completed
     document.forms.login.addEventListener('submit',(event) => {

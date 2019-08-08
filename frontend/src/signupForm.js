@@ -40,6 +40,6 @@ function checkSignup(username, password1, password2) {
 function validateInput(username, password1, password2) {
     // here we would validate the given input!
     // (could include checking this info doesn't already
-    // exit in the database, name too long, etc.)
-    return true;
+    // exit in the database, name too long/wrong characters, etc.)
+    return false;
 }

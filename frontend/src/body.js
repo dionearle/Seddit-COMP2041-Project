@@ -1,4 +1,5 @@
 import removeMainHTML from './removeMain.js';
+import createFeed from './feed.js';
 
 export default function body() {
 
@@ -42,40 +43,9 @@ function setupBodyHTML() {
     postButton.textContent = 'Post';
     feedHeader.appendChild(postButton);
 
-    // now we append all the posts to this feed
-    for (let i = 0; i < 7; i++) {
-
-        // here we create the post element
-        const post = document.createElement('li');
-        post.classList.add('post');
-        post.setAttribute('data-id-post', "");       
-        feed.appendChild(post);
-
-        // each post also contains a vote element
-        const vote = document.createElement('div');
-        vote.classList.add('vote');
-        vote.setAttribute('data-id-upvotes', "");       
-        post.appendChild(vote);
-
-        // a post also contains a container for the content
-        const content = document.createElement('div');
-        content.classList.add('content');     
-        post.appendChild(content);
-
-        // the content element contains a title element
-        const postTitle = document.createElement('h4');
-        postTitle.setAttribute('data-id-title', "");       
-        postTitle.classList.add('post-title', 'alt-text');   
-        postTitle.textContent = 'Avenger\'s Endgame Officially Passes Avatar To Become The Highest Grossing Movie Of All Time';  
-        content.appendChild(postTitle);
-
-        // the content element also contains the post author
-        const postAuthor = document.createElement('p');
-        postAuthor.setAttribute('data-id-author', "");       
-        postAuthor.classList.add('post-author');   
-        postAuthor.textContent = 'Posted by @some_dude69';  
-        content.appendChild(postAuthor);
-    }
+    // here we create all the post elements to show
+    // within this feed
+    createFeed(feed);
 
     // once all the elements are setup, we add it before
     // the footer element within the HTMLs

@@ -36,5 +36,5 @@ function checkLogin(username, password) {
 // ensures the given username and password are valid
 function validatePassword(username, password) {
     // here we would validate the username and password!
-    return true;
+    return false;
 }
