@@ -42,7 +42,7 @@ function setupPublicFeed(feed) {
             // for this post
             const post = setupPostHTML(posts[i]);
 
-            // finally we append this to the given feed element
+            // finally we append this post to the given feed element
             feed.appendChild(post);
         }
 
@@ -75,7 +75,7 @@ function setupUserFeed(feed, token) {
             // for this post
             const post = setupPostHTML(posts[i]);
            
-            // finally we append this to the given feed element
+            // finally we append this post to the given feed element
             feed.appendChild(post);
         }
 
