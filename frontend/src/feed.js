@@ -15,9 +15,11 @@ export default function feed(feed) {
     }
 }
 
+// function which sets up the public feed of posts for
+// non logged in users
 function setupPublicFeed(feed) {
 
-    // we also setup the options for our fetch request
+    // here we simply setup the options for the fetch request
     const options = {
         method: 'GET',
         headers: {
@@ -25,17 +27,22 @@ function setupPublicFeed(feed) {
         }
     }
 
-    // we use auth/login to authenticate this login
+    // we use post/public to retrieve the public feed
     fetch(`${API_URL}/post/public`, options)
     .then(response =>  response.json())
     .then(response => {
 
+        // we retrieve the posts object from the returned json
         const posts = response.posts;
 
+        // we loop through all posts given
         for (let i = 0; i < posts.length; i++) {
 
+            // we then call a helper function to setup the HTML
+            // for this post
             const post = setupPostHTML(posts[i]);
 
+            // finally we append this to the given feed element
             feed.appendChild(post);
         }
 
@@ -44,7 +51,7 @@ function setupPublicFeed(feed) {
 
 function setupUserFeed(feed, token) {
 
-    // we also setup the options for our fetch request
+    // here we simply setup the options for the fetch request
     const options = {
         method: 'GET',
         headers: {
@@ -53,18 +60,32 @@ function setupUserFeed(feed, token) {
         }
     }
 
-    // we use auth/login to authenticate this login
+    // we use user/feed to retrieve this user's feed of posts
     fetch(`${API_URL}/user/feed`, options)
     .then(response =>  response.json())
     .then(response => {
 
+        // we retrieve the posts object from the returned json
         const posts = response.posts;
 
+        // we loop through all posts given
         for (let i = 0; i < posts.length; i++) {
 
+            // we then call a helper function to setup the HTML
+            // for this post
             const post = setupPostHTML(posts[i]);
-
+           
+            // finally we append this to the given feed element
             feed.appendChild(post);
+        }
+
+        // if the user's feed is empty, then we want to handle this
+        if (posts.length === 0) {
+            // first we alert the user that their feed is empty
+            alert('No posts to display! Showing public feed...');
+            
+            // then we simply display the public feed
+            setupPublicFeed(feed);
         }
 
     });
@@ -72,8 +93,6 @@ function setupUserFeed(feed, token) {
 
 // simply sets up the HTML for the given post object
 function setupPostHTML(json) {
-
-    const feed = document.getElementById('feed');
 
     // here we create the post element
     const post = document.createElement('li');
@@ -138,20 +157,27 @@ function setupPostHTML(json) {
     return post;
 }
 
+// a helper function to correctly format the upload time
+// of a post
 function setPostTime(postTime) {
 
+    // we convert the UNIX timestamp into a date object
     const postDate = new Date(postTime * 1000);
+
+    // we then extract the relevant information
     const month = postDate.getMonth();
     const date = postDate.getDate();
     const year = postDate.getFullYear();
-
     let hours = postDate.getHours();
+    const minutes = postDate.getMinutes();
+    const seconds = postDate.getSeconds();
+
+    // we also want to convert from 24hr time to 12hr time
     const suffix = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    const minutes = postDate.getMinutes();
-    const seconds = postDate.getSeconds();
     
+    // finally we return a formatted string to display
     return 'Posted on ' + date + '/' + month + '/' + year 
     + ' at ' + hours + ':' + ("0"+minutes).slice(-2) + ':' 
     + ("0"+seconds).slice(-2) + suffix;
