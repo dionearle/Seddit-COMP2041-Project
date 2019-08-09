@@ -1,6 +1,7 @@
 import API_URL from './backend_url.js';
+import setupPostFunctionality from './postFunctionality.js'
 
-export default function feed(feed) {
+export default function feed() {
 
     // here we retrieve the token from local storage
     const token = localStorage.getItem('token');
@@ -8,16 +9,16 @@ export default function feed(feed) {
     // if the token isn't set, this means the user isn't
     // logged in, so we display the public feed
     if (token === null) {
-        setupPublicFeed(feed);
+        setupPublicFeed(token);
     // if the token is set, we display this user's feed
     } else {
-        setupUserFeed(feed, token);
+        setupUserFeed(token);
     }
 }
 
 // function which sets up the public feed of posts for
 // non logged in users
-function setupPublicFeed(feed) {
+function setupPublicFeed(token) {
 
     // here we simply setup the options for the fetch request
     const options = {
@@ -40,16 +41,12 @@ function setupPublicFeed(feed) {
 
             // we then call a helper function to setup the HTML
             // for this post
-            const post = setupPostHTML(posts[i]);
-
-            // finally we append this post to the given feed element
-            feed.appendChild(post);
+            setupPostHTML(posts[i], token);
         }
-
     });
 }
 
-function setupUserFeed(feed, token) {
+function setupUserFeed(token) {
 
     // here we simply setup the options for the fetch request
     const options = {
@@ -68,31 +65,31 @@ function setupUserFeed(feed, token) {
         // we retrieve the posts object from the returned json
         const posts = response.posts;
 
-        // we loop through all posts given
-        for (let i = 0; i < posts.length; i++) {
-
-            // we then call a helper function to setup the HTML
-            // for this post
-            const post = setupPostHTML(posts[i]);
-           
-            // finally we append this post to the given feed element
-            feed.appendChild(post);
-        }
-
         // if the user's feed is empty, then we want to handle this
         if (posts.length === 0) {
             // first we alert the user that their feed is empty
             alert('No posts to display! Showing public feed...');
             
             // then we simply display the public feed
-            setupPublicFeed(feed);
+            setupPublicFeed(feed, token);
+
+        } else {
+            // we loop through all posts given
+            for (let i = 0; i < posts.length; i++) {
+
+                // we then call a helper function to setup the HTML
+                // for this post
+                setupPostHTML(posts[i], token);
+            }
         }
 
     });
 }
 
 // simply sets up the HTML for the given post object
-function setupPostHTML(json) {
+function setupPostHTML(json, token) {
+
+    const feed = document.getElementById('feed');
 
     // here we create the post element
     const post = document.createElement('li');
@@ -102,9 +99,13 @@ function setupPostHTML(json) {
     // each post also contains a vote element
     const vote = document.createElement('div');
     vote.classList.add('vote');
-    vote.setAttribute('data-id-upvotes', "");
-    vote.textContent = json.meta.upvotes.length;       
+    vote.setAttribute('data-id-upvotes', "");       
     post.appendChild(vote);
+
+    // this vote element should show the number of upvotes for this post
+    const numUpvotes = document.createElement('p');        
+    numUpvotes.textContent = json.meta.upvotes.length; 
+    vote.appendChild(numUpvotes);
 
     // a post also contains a container for the content
     const content = document.createElement('div');
@@ -154,7 +155,14 @@ function setupPostHTML(json) {
     postSubSeddit.textContent = '/s/' + json.meta.subseddit;
     content.appendChild(postSubSeddit);
 
-    return post;
+    // finally we append this post to the given feed element
+    feed.appendChild(post);
+
+    // if the user is logged in,  we also want to handle
+    // any functionality involved with the post
+    if (token !== null) {
+        setupPostFunctionality(json, numUpvotes, feed);
+    }
 }
 
 // a helper function to correctly format the upload time
@@ -181,4 +189,8 @@ function setPostTime(postTime) {
     return 'Posted on ' + date + '/' + month + '/' + year 
     + ' at ' + hours + ':' + ("0"+minutes).slice(-2) + ':' 
     + ("0"+seconds).slice(-2) + suffix;
+}
+
+function handleViewUpvotes() {
+    console.log('lol');
 }
