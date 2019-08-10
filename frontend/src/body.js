@@ -1,5 +1,6 @@
 import removeMainHTML from './removeMain.js';
 import createFeed from './feed.js';
+import postContent from './createPost.js';
 
 export default function body() {
 
@@ -12,6 +13,9 @@ export default function body() {
 
 // simply sets up the HTML for the body section of the page
 function setupBodyHTML() {
+
+    // here we retrieve the token from local storage
+    const token = localStorage.getItem('token');
 
     // we first retrieve the existing root HTML element
     const root = document.getElementById('root');
@@ -42,6 +46,16 @@ function setupBodyHTML() {
     postButton.classList.add('button', 'button-secondary');
     postButton.textContent = 'Post';
     feedHeader.appendChild(postButton);
+
+    // we want a logged in user to be able to create a post
+    if (token !== null) {
+        
+        // we do so by adding an event listener to the
+        // post button we created
+        postButton.addEventListener('click', function() {
+            postContent();
+        });
+    }
 
     // here we create all the post elements to show
     // within this feed

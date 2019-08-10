@@ -136,6 +136,7 @@ footer > * {
 }
 
 /* Add your styles here */
+.postBox,
 .signupBox,
 .loginBox {
   display: flex;
@@ -151,6 +152,7 @@ footer > * {
   align-items: left;
 }
 
+.post-form,
 .signup-form,
 .login-form {
   display: flex;
@@ -161,6 +163,7 @@ footer > * {
   margin: 20px auto;
 }
 
+.post-title,
 .signup-title,
 .login-title {
   padding-bottom: 10px;
