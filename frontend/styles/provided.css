@@ -223,3 +223,18 @@ footer > * {
 .modal-close {
   float: right;
 }
+
+.upvote-button {
+  color: grey;
+  font-size: 20px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.upvote-button.upvoted {
+  color: white;
+  background-color: var(--reddit-orange);
+}

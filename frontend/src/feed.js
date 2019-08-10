@@ -1,5 +1,7 @@
 import API_URL from './backend_url.js';
-import setupPostFunctionality from './postFunctionality.js'
+import viewPostUpvotes from './showUpvotes.js';
+import viewPostComments from './showComments.js';
+import upvotePost from './upvotePost.js';
 
 export default function feed() {
 
@@ -67,11 +69,9 @@ function setupUserFeed(token) {
 
         // if the user's feed is empty, then we want to handle this
         if (posts.length === 0) {
-            // first we alert the user that their feed is empty
-            alert('No posts to display! Showing public feed...');
-            
-            // then we simply display the public feed
-            setupPublicFeed(feed, token);
+
+            // we simply alert the user that their feed is empty
+            alert('No posts to display in your feed!');
 
         } else {
             // we loop through all posts given
@@ -82,7 +82,6 @@ function setupUserFeed(token) {
                 setupPostHTML(posts[i], token);
             }
         }
-
     });
 }
 
@@ -106,6 +105,12 @@ function setupPostHTML(json, token) {
     const numUpvotes = document.createElement('p');        
     numUpvotes.textContent = json.meta.upvotes.length; 
     vote.appendChild(numUpvotes);
+
+    // within the vote element a button to upvote the post should exist
+    const upvoteButton = document.createElement('h1');
+    upvoteButton.classList.add('upvote-button', 'flex-center');
+    upvoteButton.textContent = '^';
+    vote.appendChild(upvoteButton);
 
     // a post also contains a container for the content
     const content = document.createElement('div');
@@ -161,7 +166,11 @@ function setupPostHTML(json, token) {
     // if the user is logged in,  we also want to handle
     // any functionality involved with the post
     if (token !== null) {
-        setupPostFunctionality(json, feed, numUpvotes, postComments);
+        
+        viewPostUpvotes(feed, json.meta.upvotes, numUpvotes);
+        viewPostComments(feed, json.comments, postComments);
+        upvotePost(json.id, upvoteButton, token);
+        setupUpvoteStatus(json, token, upvoteButton);  
     }
 }
 
@@ -191,6 +200,28 @@ function setPostTime(postTime) {
     + ("0"+seconds).slice(-2) + suffix;
 }
 
-function handleViewUpvotes() {
-    console.log('lol');
+// function which ensures the upvote button matches
+// whether the user has upvoted the post or not
+function setupUpvoteStatus(json, token, upvoteButton) {
+    
+    // here we simply setup the options for the fetch request
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // we use user/feed to retrieve this user's feed of posts
+    fetch(`${API_URL}/user/`, options)
+    .then(response => response.json())
+    .then(user => {
+
+        // if the user has upvoted the post,
+        // we want to change the view of the button to reflect this
+        if (json.meta.upvotes.includes(user.id)) {
+            upvoteButton.classList.toggle('upvoted');
+        }
+    });
 }
