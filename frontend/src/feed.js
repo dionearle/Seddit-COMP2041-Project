@@ -161,7 +161,7 @@ function setupPostHTML(json, token) {
     // if the user is logged in,  we also want to handle
     // any functionality involved with the post
     if (token !== null) {
-        setupPostFunctionality(json, numUpvotes, feed);
+        setupPostFunctionality(json, feed, numUpvotes, postComments);
     }
 }
 
