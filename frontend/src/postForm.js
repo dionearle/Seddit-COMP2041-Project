@@ -14,6 +14,7 @@ export default function handlePostForm() {
     const text = postForm.elements.text.value;
     const subseddit = postForm.elements.subseddit.value;
     const image = postForm.elements.image.value;
+    const base64 = postForm.elements.base64.value;
 
     // if any fields (other than image) are empty, alert the user
     if (title === '' || text === '' || subseddit === '') {
@@ -24,12 +25,15 @@ export default function handlePostForm() {
     // if an image was provided, then our post should include this
     } else {
 
-        const base64Image = /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/;
+        // we use regex to test the given image is in png format
+        const png = /\.png$/;
 
-        if (!base64Image.test(image)) {
-            alert('Not a valid image');
+        // if the image isn't png, we alert the user
+        if (!png.test(image)) {
+            alert('Sorry, only png images are supported');
+        // otherwise we can create a post using this iamge
         } else {
-            uploadImagePost(title, text, subseddit, image, token);
+            uploadImagePost(title, text, subseddit, base64, token);
         }
     }    
 }
@@ -42,6 +46,39 @@ function uploadRegularPost(title, text, subseddit, token) {
         "title": `${title}`,
         "text": `${text}`,
         "subseddit": `${subseddit}`
+    }
+
+    // we also setup the options for our fetch request
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    }
+
+    // we use post/ to authenticate this post creation
+    fetch(`${API_URL}/post/`, options)
+    .then(() =>  {
+
+        // we alert the user that they successfully created their post
+        alert('Post Successfully Created');
+
+        // we now want to return to the user's feed
+        setupFeed();
+    });
+}
+
+// allows the user to upload a post with an image
+function uploadImagePost(title, text, subseddit, image, token) {
+
+    // we construct a payload from the given username and password
+    const payload = {
+        "title": `${title}`,
+        "text": `${text}`,
+        "subseddit": `${subseddit}`,
+        "image": `${image}`
     }
 
     // we also setup the options for our fetch request

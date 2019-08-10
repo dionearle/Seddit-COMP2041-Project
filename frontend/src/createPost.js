@@ -90,7 +90,14 @@ function setupPostHTML() {
     const postFormImage = document.createElement('input');
     postFormImage.type = 'file';
     postFormImage.name = 'image';
+    postFormImage.id = 'post-form-image';
     postForm.appendChild(postFormImage);
+
+    // if a user uploads an image, then we want to convert
+    // this to a base64 string
+    postFormImage.addEventListener('change', function(){
+        convertToBase64(postForm);
+    });
 
     // finally we have a submit button for the form
     const postFormSubmit = document.createElement('input');
@@ -102,4 +109,41 @@ function setupPostHTML() {
     // the footer element within the HTMLs
     const footer = document.getElementById('footer');
     root.insertBefore(main, footer);
+}
+
+// helper function which converts uploaded images to base 64 format
+function convertToBase64(postForm) {
+
+    // here we retrieve the files uploaded
+    var numFiles = document.getElementById('post-form-image').files;
+    
+    // if a file was uploaded, then we want to conver it
+    if (numFiles.length > 0) {
+
+      // we grab the first file in the image form element
+      var image = numFiles[0];
+
+      // we then create a new file reader and read in the image
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(image);
+
+      // this function handles what happens when the file
+      // is read in
+      fileReader.onload = function(fileLoadedEvent) {
+
+        // we first extract the base64 string returned
+        var string = fileLoadedEvent.target.result;
+        
+        // we use this regex to remove the uneeded metadata
+        const regex = /^data:image\/[a-z]+;base64,/;       
+        string = string.replace(regex, '');
+
+        // finally we create a new hidden element to add to the form
+        var base64 = document.createElement('input');
+        base64.name = 'base64';
+        base64.value = string;
+        base64.style.display = 'none';
+        postForm.appendChild(base64);
+      }
+    }
 }
