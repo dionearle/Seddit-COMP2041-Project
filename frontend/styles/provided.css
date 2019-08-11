@@ -111,6 +111,7 @@ footer > * {
   list-style-type: none;
 }
 
+#profile,
 #signup,
 #login,
 #feed {
@@ -121,6 +122,7 @@ footer > * {
   padding: 0;
 }
 
+.profile-header,
 .signup-header,
 .login-header,
 .feed-header {
@@ -128,6 +130,7 @@ footer > * {
   justify-content: space-between;
 }
 
+.profile.title,
 .signup-title,
 .login-title,
 .feed-title {
@@ -136,6 +139,7 @@ footer > * {
 }
 
 /* Add your styles here */
+.profileBox,
 .postBox,
 .signupBox,
 .loginBox {
@@ -152,6 +156,7 @@ footer > * {
   align-items: left;
 }
 
+.inner-profile,
 .post-form,
 .signup-form,
 .login-form {
@@ -245,4 +250,9 @@ footer > * {
 .pagination {
   display: flex;
   justify-content: space-between;
+}
+
+.profileBox,
+.inner-profile {
+  height: auto;
 }

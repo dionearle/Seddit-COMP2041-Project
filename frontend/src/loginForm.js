@@ -1,5 +1,6 @@
-import setupFeed from './body.js';
 import API_URL from './backend_url.js';
+import setupFeed from './body.js';
+import setupBanner from './banner.js';
 
 export default function handleLoginForm() {
 
@@ -60,7 +61,8 @@ function validateLogin(username, password) {
         // of the user's feed we are displaying
         sessionStorage.setItem('current-page', 0);
 
-        // we now want to setup the feed for the page
+        // we now want to setup the banner and feed for the page
+        setupBanner();
         setupFeed();
     })
     // if the fetch returned an error, we handle it here

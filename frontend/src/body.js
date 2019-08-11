@@ -23,6 +23,7 @@ function setupBodyHTML() {
     // setting up the outer main class
     const main = document.createElement('main');
     main.setAttribute('role', 'main');
+    main.id = 'main';
 
     // setting up the feed element within main
     const feed = document.createElement('ul');

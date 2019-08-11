@@ -14,8 +14,8 @@ import footer from './footer.js';
 // different datasets.
 function initApp(apiUrl) {
   // your app initialisation goes here
-  banner();
   footer();
+  banner();
   body();
 }
 

@@ -1,7 +1,12 @@
 import handleLoginButton from './login.js'; 
 import handleSignupButton from './signup.js'; 
+import handleViewProfileButton from './profile.js';
+import removeBannerHTML from './removeBanner.js';
 
 export default function banner() {
+
+    // tear down function which removes the HTML elements of the banner
+    removeBannerHTML();
 
     // setup function which creates the HTML elements of the banner
     setupBannerHTML();
@@ -13,10 +18,14 @@ export default function banner() {
     // we also want to add an event listener for the signup button
     const signupButton = document.getElementById('signup-button');
     signupButton.addEventListener('click', handleSignupButton);
+
 }
 
 // simply sets up the HTML for the banner section of the page
 function setupBannerHTML() {
+
+    // here we retrieve the token from session storage
+    const token = sessionStorage.getItem('token');
 
     // we first retrieve the existing root HTML element
     const root = document.getElementById('root');
@@ -32,6 +41,19 @@ function setupBannerHTML() {
     logo.classList.add('flex-center');
     logo.textContent = 'Seddit';
     banner.appendChild(logo);
+
+    // if the user is logged in, they should also be able
+    // to view their profile
+    if (token !== null) {
+        const profile = document.createElement('button');
+        profile.id = 'profile-button';
+        profile.classList.add('button', 'button-primary');
+        profile.textContent = 'View Profile';
+        banner.appendChild(profile);
+
+        // if this user clicks the button, their profile should be displayed
+        profile.addEventListener('click', handleViewProfileButton);
+    }
 
     // setting up the nav list element within the banner
     const nav = document.createElement('ul');
@@ -81,5 +103,6 @@ function setupBannerHTML() {
 
     // once all the elements are setup, we append it to the
     // already existing root HTML element
-    root.appendChild(banner);
+    const footer = document.getElementById('footer');
+    root.insertBefore(banner, footer);
 }
