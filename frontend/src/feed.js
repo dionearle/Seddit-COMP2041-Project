@@ -3,6 +3,7 @@ import viewPostUpvotes from './showUpvotes.js';
 import viewPostComments from './showComments.js';
 import upvotePost from './upvotePost.js';
 import setupBody from './body.js';
+import commentPost from './comment.js';
 
 export default function feed() {
 
@@ -176,6 +177,12 @@ function setupPostHTML(json, token) {
     postComments.textContent = 'Comments: ' + json.comments.length;
     content.appendChild(postComments);
 
+    // we also have a button to comment on this post
+    const commentButton = document.createElement('button');
+    commentButton.classList.add('button', 'button-secondary');
+    commentButton.textContent = 'Comment';
+    content.appendChild(commentButton);
+
     // we also want to display the subseddit this post
     // belongs to
     const postSubSeddit = document.createElement('p');         
@@ -192,7 +199,8 @@ function setupPostHTML(json, token) {
         viewPostUpvotes(feed, json.meta.upvotes, numUpvotes);
         viewPostComments(feed, json.comments, postComments);
         upvotePost(json.id, upvoteButton, token);
-        setupUpvoteStatus(json, token, upvoteButton);  
+        setupUpvoteStatus(json, token, upvoteButton); 
+        commentPost(feed, json.id, commentButton); 
     }
 }
 
