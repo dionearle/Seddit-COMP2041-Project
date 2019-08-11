@@ -1,6 +1,7 @@
 import handleLoginButton from './login.js'; 
 import handleSignupButton from './signup.js'; 
 import handleViewProfileButton from './profile.js';
+import handleHomeButton from './body.js';
 import removeBannerHTML from './removeBanner.js';
 
 export default function banner() {
@@ -19,6 +20,8 @@ export default function banner() {
     const signupButton = document.getElementById('signup-button');
     signupButton.addEventListener('click', handleSignupButton);
 
+    const logo = document.getElementById('logo');
+    logo.addEventListener('click', handleHomeButton);
 }
 
 // simply sets up the HTML for the banner section of the page
