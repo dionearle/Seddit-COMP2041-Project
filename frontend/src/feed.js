@@ -119,15 +119,13 @@ function setupPostHTML(json, token) {
 
     // each post also contains a vote element
     const vote = document.createElement('div');
-    vote.classList.add('vote');
-    //vote.setAttribute('data-id-upvotes', "");       
+    vote.classList.add('vote');      
     post.appendChild(vote);
 
     // this vote element should show the number of upvotes for this post
     const numUpvotes = document.createElement('p');
     numUpvotes.setAttribute('data-id-upvotes', "");        
     numUpvotes.textContent = json.meta.upvotes.length; 
-    console.log(json.meta.upvotes);
     vote.appendChild(numUpvotes);
 
     // within the vote element a button to upvote the post should exist
