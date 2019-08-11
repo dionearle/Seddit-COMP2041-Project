@@ -61,43 +61,53 @@ function setupProfileHTML(user, token) {
     profileBox.classList.add('profileBox');     
     profile.appendChild(profileBox);
 
-    // next we make a form that the user will fill out
+    // we first make a container for within this box
     const innerProfile = document.createElement('div');
     innerProfile.classList.add('inner-profile'); 
     profileBox.appendChild(innerProfile);
 
+    // the first element to display is a title
     const innerProfileTitle = document.createElement('h3');
     innerProfileTitle.textContent = 'Your Seddit Profile';
     innerProfile.appendChild(innerProfileTitle);
 
+    // now we show the username of this user
     const profileUsername = document.createElement('p');
     profileUsername.textContent = 'Username: ' + user.username;
     innerProfile.appendChild(profileUsername);
 
+    // we also display the id of this user
     const profileId = document.createElement('p');
     profileId.textContent = 'id: ' + user.id;
     innerProfile.appendChild(profileId);
 
+    // next we show the email
     const profileEmail = document.createElement('p');
     profileEmail.textContent = 'Email: ' + user.email;
     innerProfile.appendChild(profileEmail);
 
+    // the user's given name is also displayed
     const profileName = document.createElement('p');
     profileName.textContent = 'Name: ' + user.name;
     innerProfile.appendChild(profileName);
 
+    // here we show how many users they are following
     const profileFollowing = document.createElement('p');
     profileFollowing.textContent = 'Users Following: ' + user.following.length;
     innerProfile.appendChild(profileFollowing);
 
+    // we also show how many users are following them
     const profileFollowers = document.createElement('p');
     profileFollowers.textContent = 'Followers: ' + user.followed_num;
     innerProfile.appendChild(profileFollowers);
 
+    // next we show how many posts this user has created
     const profileNumPosts = document.createElement('p');
     profileNumPosts.textContent = 'Number of posts made: ' + user.posts.length;
     innerProfile.appendChild(profileNumPosts);
 
+    // finally we display how many upvotes all of their posts
+    // have combined
     setupTotalUpvotes(user, innerProfile, token);
 
     // once all the elements are setup, we add it before
@@ -106,11 +116,12 @@ function setupProfileHTML(user, token) {
     root.insertBefore(main, footer);
 }
 
+// helper function to determine the total upvotes recieved
+// across all posts made by the user
 function setupTotalUpvotes(user, innerProfile, token) {
 
+    // we create an element to display this information
     const totalUpvotes = document.createElement('p');
-
-    let posts = [];
 
     // here we specify the url for the fetch request
     let url = new URL(`${API_URL}/post/`);
@@ -124,28 +135,40 @@ function setupTotalUpvotes(user, innerProfile, token) {
         }
     }
 
+    // we setup an array of fetch requests, alongside a variable
+    // to store the total number of upvotes
+    let posts = [];
     let result = 0;
+
+    // for each post the user has made, we want to fetch it
     for (let i = 0; i < user.posts.length; i++) {
 
+        // since the API requires the post ID, we set this as a query
         const id = user.posts[i];
-        // since the API requires to post ID, we set this as a query
         let query = {id: id};
 
         // we then add this search query to the url
         url.search = new URLSearchParams(query);
 
+        // we now fetch this and add it to the array
         posts.push(fetch(url, options)
         .then(response => response.json()));
     }
 
+    // once all fetch requests are complete in the array,
+    // we handle the responses
     Promise.all(posts)
     .then((response) => {
 
+        // for each response, we recieved, we want to
+        // extract the number of upvotes for the post
+        // and add it to the total result
         for (let i = 0; i < response.length; i++) {
             const upvotes = response[i].meta.upvotes.length;
             result += upvotes;
         }
 
+        // finally we set the text content to display this result
         totalUpvotes.textContent = 'Total upvotes across all posts: ' + result;
         innerProfile.appendChild(totalUpvotes);
     });

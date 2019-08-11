@@ -20,6 +20,8 @@ export default function banner() {
     const signupButton = document.getElementById('signup-button');
     signupButton.addEventListener('click', handleSignupButton);
 
+    // finally, we allow the user to click the logo to be redirected
+    // back to their home feed
     const logo = document.getElementById('logo');
     logo.addEventListener('click', handleHomeButton);
 }
