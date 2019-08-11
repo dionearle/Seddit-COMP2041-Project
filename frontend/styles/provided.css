@@ -241,3 +241,8 @@ footer > * {
   color: white;
   background-color: var(--reddit-orange);
 }
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}

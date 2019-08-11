@@ -2,11 +2,12 @@ import API_URL from './backend_url.js';
 import viewPostUpvotes from './showUpvotes.js';
 import viewPostComments from './showComments.js';
 import upvotePost from './upvotePost.js';
+import setupBody from './body.js';
 
 export default function feed() {
 
-    // here we retrieve the token from local storage
-    const token = localStorage.getItem('token');
+    // here we retrieve the token from session storage
+    const token = sessionStorage.getItem('token');
 
     // if the token isn't set, this means the user isn't
     // logged in, so we display the public feed
@@ -50,6 +51,19 @@ function setupPublicFeed(token) {
 
 function setupUserFeed(token) {
 
+    // here we extract the page number we want to fetch
+    const pageNum = sessionStorage.getItem('current-page');
+
+    // here we specify the url for the fetch request
+    let url = new URL(`${API_URL}/user/feed`);
+
+    // here we specify which page we are fetching
+    const p = pageNum * 10;
+    let query = {p: p};
+
+    // we then add this search query to the url
+    url.search = new URLSearchParams(query);
+
     // here we simply setup the options for the fetch request
     const options = {
         method: 'GET',
@@ -60,7 +74,7 @@ function setupUserFeed(token) {
     }
 
     // we use user/feed to retrieve this user's feed of posts
-    fetch(`${API_URL}/user/feed`, options)
+    fetch(url, options)
     .then(response =>  response.json())
     .then(response => {
 
@@ -70,8 +84,16 @@ function setupUserFeed(token) {
         // if the user's feed is empty, then we want to handle this
         if (posts.length === 0) {
 
-            // we simply alert the user that their feed is empty
-            alert('No posts to display in your feed!');
+            if (pageNum > 0) {
+                // if this isn't the first page, then we display the
+                // previous page in which there were posts
+                alert('No more posts in your feed!');
+                sessionStorage.setItem('current-page', pageNum - 1);
+                setupBody();
+            } else {
+                // we simply alert the user that their feed is empty
+                alert('No posts to display in your feed!');
+            }
 
         } else {
             // we loop through all posts given

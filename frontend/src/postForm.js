@@ -3,8 +3,8 @@ import API_URL from './backend_url.js';
 
 export default function handlePostForm() {
 
-    // first we retrieve the token from local storage
-    const token = localStorage.getItem('token');
+    // first we retrieve the token from session storage
+    const token = sessionStorage.getItem('token');
 
     // here we grab the post form
     const postForm = document.forms.post;

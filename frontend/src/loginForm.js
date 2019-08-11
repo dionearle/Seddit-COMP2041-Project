@@ -52,9 +52,13 @@ function validateLogin(username, password) {
         alert('Login Successful');
 
         // since a token is returned which needs to be used later,
-        // we want to store this in local storage
+        // we want to store this in session storage
         const token = response.token;
-        localStorage.setItem('token', token);
+        sessionStorage.setItem('token', token);
+
+        // we also set a value to keep track of what page
+        // of the user's feed we are displaying
+        sessionStorage.setItem('current-page', 0);
 
         // we now want to setup the feed for the page
         setupFeed();
