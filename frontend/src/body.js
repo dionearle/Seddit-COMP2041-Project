@@ -106,7 +106,7 @@ function setupPagination(main) {
     // display the previous set of posts
     prevPage.addEventListener('click', function () {
         // if we are on the first page, then there are no previous
-        // posts so we don't do anything
+        // posts, so we don't do anything
         if (pageNum > 0) {
             sessionStorage.setItem('current-page', Number(pageNum) - 1);
             body();
