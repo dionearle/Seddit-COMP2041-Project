@@ -1,2 +1,36 @@
-25/07/19     18:00   18:15   put the first real entry in diary.txt (delete this line!)
+
++------+-------+-------+-------------+-----------------------------------------------------------------------------------------------------------+
+| Date | Start | Stop  |  Activity   |                                                 Comments                                                  |
++------+-------+-------+-------------+-----------------------------------------------------------------------------------------------------------+
+| 5/8  | 11:00 | 13:00 | coding      | implemented the HTML elements for the banner of the page                                                  |
+| 5/8  | 13:30 | 14:30 | coding      | implemented HTML for body of page                                                                         |
+| 5/8  | 16:00 | 18:00 | coding      | added the login form which can be accessed after clicking the login button                                |
+| 5/8  | 18:15 | 19:00 | refactoring | refactored code to use different files and separated to use multiple functions                            |
+| 5/8  | 20:00 | 21:00 | coding      | implemented the signup form which can be reached through a button                                         |
+| 5/8  | 21:45 | 22:45 | debugging   | fixed an issue with the layout of the page when navigating between different views                        |
+| 8/8  | 08:00 | 10:00 | debugging   | attempted to implement the feed but ran into many problems, so did research and debugging to resolve this |
+| 8/8  | 10:30 | 11:45 | coding      | attempted to implement the login form using the API                                                       |
+| 8/8  | 14:30 | 15:30 | coding      | login and signup now work as intended                                                                     |
+| 8/8  | 16:45 | 17:15 | refactoring | refactored fetch requests for login and signup forms to check responses from API                          |
+| 8/8  | 17:45 | 18:00 | coding      | added an initial check to ensure the email format given is correct when signing up                        |
+| 8/8  | 22:30 | 23:00 | coding      | stored the returned token from logging in and signing up for later use                                    |
+| 9/8  | 14:30 | 15:30 | coding      | implemented the feed for non logged in users                                                              |
+| 9/8  | 15:45 | 16:45 | coding      | implemented the feed for logged in users                                                                  |
+| 9/8  | 17:00 | 17:30 | debugging   | did some debugging for subset 1 as a whole                                                                |
+| 9/8  | 19:00 | 21:00 | coding      | implemented a modal to display the users who upvoted a post                                               |
+| 10/8 | 11:45 | 12:45 | coding      | logged in users can now see all comments for a post                                                       |
+| 10/8 | 16:00 | 18:00 | coding      | added the ability for logged in users to upvote posts on their feed                                       |
+| 10/8 | 18:30 | 20:00 | coding      | a logged in user can now create a text post                                                               |
+| 10/8 | 20:15 | 21:00 | coding      | implemented post creation with images                                                                     |
+| 10/8 | 21:15 | 22:30 | debugging   | fixed issues with uploading posts with images                                                             |
+| 11/8 | 10:15 | 11:30 | coding      | implemented pagination for logged in users                                                                |
+| 11/8 | 12:45 | 14:15 | coding      | logged in users can now view their profile                                                                |
+| 11/8 | 14:30 | 14:45 | coding      | added extra feature to allow access to home feed from anywhere on site                                    |
+| 11/8 | 17:15 | 17:45 | debugging   | did some debugging and testing for subset 2 as a whole                                                    |
+| 12/8 | 09:00 | 10:00 | coding      | logged in users can now write comments on a post                                                          |
+| 12/8 | 10:15 | 11:00 | coding      | users can now update their profile information                                                            |
+| 12/8 | 12:00 | 13:00 | coding      | user pages are now implemented, displaying user's info and posts made                                     |
+| 12/8 | 14:30 | 15:30 | coding      | users can now follow and unfollow other users                                                             |
+| 12/8 | 16:15 | 17:15 | testing     | did some final testing on subset 3 and the website as a whole before submitting                           |
++------+-------+-------+-------------+-----------------------------------------------------------------------------------------------------------+
 
