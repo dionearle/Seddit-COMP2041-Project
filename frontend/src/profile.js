@@ -1,5 +1,7 @@
 import API_URL from './backend_url.js';
 import removeMainHTML from './removeMain.js';
+import handleUpdateProfileButton from './updateProfile.js';
+import updateProfile from './updateProfile.js';
 
 export default function profile() {
 
@@ -53,8 +55,6 @@ function setupProfileHTML(user, token) {
     profileTitle.classList.add('profile-title', 'alt-text');
     profileTitle.textContent = 'Profile';
     profileHeader.appendChild(profileTitle);
-
-    // now we append the profile form
 
     // here we create the profileBox which contains all profile information
     const profileBox = document.createElement('div');
@@ -171,5 +171,16 @@ function setupTotalUpvotes(user, innerProfile, token) {
         // finally we set the text content to display this result
         totalUpvotes.textContent = 'Total upvotes across all posts: ' + result;
         innerProfile.appendChild(totalUpvotes);
+
+        // we also want the user to be able to update their profile,
+        // which can be done through this button
+        const updateProfileButton = document.createElement('button');
+        updateProfileButton.classList.add('button', 'button-primary');
+        updateProfileButton.textContent = 'Update Profile';
+        innerProfile.appendChild(updateProfileButton);
+
+        updateProfileButton.addEventListener('click', function() {
+            handleUpdateProfileButton();
+        });
     });
 }

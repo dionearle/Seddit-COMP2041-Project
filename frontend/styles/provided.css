@@ -111,6 +111,7 @@ footer > * {
   list-style-type: none;
 }
 
+#updateProfile,
 #profile,
 #signup,
 #login,
@@ -122,6 +123,7 @@ footer > * {
   padding: 0;
 }
 
+.updateProfile-header,
 .profile-header,
 .signup-header,
 .login-header,
@@ -130,6 +132,7 @@ footer > * {
   justify-content: space-between;
 }
 
+.updateProfile-title,
 .profile.title,
 .signup-title,
 .login-title,
@@ -139,6 +142,7 @@ footer > * {
 }
 
 /* Add your styles here */
+.updateProfileBox,
 .profileBox,
 .postBox,
 .signupBox,
@@ -156,6 +160,7 @@ footer > * {
   align-items: left;
 }
 
+.updateProfile-form,
 .comment-form,
 .inner-profile,
 .post-form,
