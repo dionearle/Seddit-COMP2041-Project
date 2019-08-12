@@ -202,7 +202,7 @@ function setupPostHTML(json, token) {
         upvotePost(json.id, upvoteButton, token);
         setupUpvoteStatus(json, token, upvoteButton); 
         commentPost(feed, json.id, commentButton);
-        viewAuthorProfile(feed, json.meta.author, postAuthor); 
+        viewAuthorProfile(json.meta.author, postAuthor); 
     }
 }
 

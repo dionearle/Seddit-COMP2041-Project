@@ -85,10 +85,12 @@ footer {
   font-weight: bold;
 }
 
+.follow-button,
 .button-primary {
   color: var(--reddit-blue);
 }
 
+.follow-button.following,
 .button-secondary {
   background-color: var(--reddit-blue);
   color: white;

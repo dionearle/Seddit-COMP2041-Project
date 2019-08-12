@@ -1,8 +1,9 @@
 import API_URL from './backend_url.js';
 import removeMainHTML from './removeMain.js';
 import displayUserPost from './displayUserPost.js';
+import followUser from './followUser.js';
 
-export default function authorProfile(feed, username, button) {
+export default function authorProfile(username, button) {
 
     // if this user clicks the button, their profile should be displayed
     button.addEventListener('click', function() {
@@ -188,5 +189,44 @@ function setupTotalUpvotes(author, innerProfile, token, profile) {
         // finally we set the text content to display this result
         totalUpvotes.textContent = 'Total upvotes across all posts: ' + result;
         innerProfile.appendChild(totalUpvotes);
+
+        // we also want a follow button to be shown on the
+        // user's profile
+        const followButton = document.createElement('button');
+        followButton.classList.add('follow-button', 'button');
+        followButton.textContent = 'Follow';
+        innerProfile.appendChild(followButton);
+
+        // we handle the functionality of this button 
+        // in these helper functions
+        setupFollowStatus(author, token, followButton);
+        followUser(author.username, followButton, token);
+    });
+}
+
+// function which ensures the follow button matches
+// whether the user is following them or not
+function setupFollowStatus(author, token, followButton) {
+    
+    // here we simply setup the options for the fetch request
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // we use user/feed to retrieve this user's feed of posts
+    fetch(`${API_URL}/user/`, options)
+    .then(response => response.json())
+    .then(user => {
+
+        // if the user has upvoted the post,
+        // we want to change the view of the button to reflect this
+        if (user.following.includes(author.id)) {
+            followButton.classList.toggle('following');
+            followButton.textContent = 'Unfollow';
+        }
     });
 }

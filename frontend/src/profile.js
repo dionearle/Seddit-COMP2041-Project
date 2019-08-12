@@ -96,6 +96,12 @@ function setupProfileHTML(user, token) {
     profileFollowing.textContent = 'Users Following: ' + user.following.length;
     innerProfile.appendChild(profileFollowing);
 
+    for (let i = 0; i < user.following.length; i++) {
+        const followingID = document.createElement('p');
+        followingID.textContent = 'id: ' + user.following[i];
+        profileFollowing.appendChild(followingID);
+    }
+
     // we also show how many users are following them
     const profileFollowers = document.createElement('p');
     profileFollowers.textContent = 'Followers: ' + user.followed_num;
