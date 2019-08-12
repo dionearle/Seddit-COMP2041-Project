@@ -2,118 +2,10 @@ import API_URL from './backend_url.js';
 import viewPostUpvotes from './showUpvotes.js';
 import viewPostComments from './showComments.js';
 import upvotePost from './upvotePost.js';
-import setupBody from './body.js';
 import commentPost from './comment.js';
-import viewAuthorProfile from './authorProfile.js';
 
-export default function feed() {
-
-    // here we retrieve the token from session storage
-    const token = sessionStorage.getItem('token');
-
-    // if the token isn't set, this means the user isn't
-    // logged in, so we display the public feed
-    if (token === null) {
-        setupPublicFeed(token);
-    // if the token is set, we display this user's feed
-    } else {
-        setupUserFeed(token);
-    }
-}
-
-// function which sets up the public feed of posts for
-// non logged in users
-function setupPublicFeed(token) {
-
-    // here we simply setup the options for the fetch request
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }
-
-    // we use post/public to retrieve the public feed
-    fetch(`${API_URL}/post/public`, options)
-    .then(response =>  response.json())
-    .then(response => {
-
-        // we retrieve the posts object from the returned json
-        const posts = response.posts;
-
-        // we loop through all posts given
-        for (let i = 0; i < posts.length; i++) {
-
-            // we then call a helper function to setup the HTML
-            // for this post
-            setupPostHTML(posts[i], token);
-        }
-    });
-}
-
-function setupUserFeed(token) {
-
-    // here we extract the page number we want to fetch
-    const pageNum = sessionStorage.getItem('current-page');
-
-    // here we specify the url for the fetch request
-    let url = new URL(`${API_URL}/user/feed`);
-
-    // here we specify which page we are fetching
-    const p = pageNum * 10;
-    let query = {p: p};
-
-    // we then add this search query to the url
-    url.search = new URLSearchParams(query);
-
-    // here we simply setup the options for the fetch request
-    const options = {
-        method: 'GET',
-        headers: {
-            'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // we use user/feed to retrieve this user's feed of posts
-    fetch(url, options)
-    .then(response =>  response.json())
-    .then(response => {
-
-        // we retrieve the posts object from the returned json
-        const posts = response.posts;
-
-        // if the user's feed is empty, then we want to handle this
-        if (posts.length === 0) {
-
-            if (pageNum > 0) {
-                // if this isn't the first page, then we display the
-                // previous page in which there were posts
-                alert('No more posts in your feed!');
-                sessionStorage.setItem('current-page', pageNum - 1);
-                setupBody();
-            } else {
-                // we simply alert the user that their feed is empty
-                alert('No posts to display in your feed!');
-            }
-
-        } else {
-            // we loop through all posts given
-            for (let i = 0; i < posts.length; i++) {
-
-                // we then call a helper function to setup the HTML
-                // for this post
-                setupPostHTML(posts[i], token);
-            }
-        }
-    });
-}
-
-// simply sets up the HTML for the given post object
-function setupPostHTML(json, token) {
-
-    const feed = document.getElementById('feed');
-
+export default function displayUserPost(json, profile, token) {
+    
     // here we create the post element
     const post = document.createElement('li');
     post.classList.add('post');
@@ -191,18 +83,17 @@ function setupPostHTML(json, token) {
     content.appendChild(postSubSeddit);
 
     // finally we append this post to the given feed element
-    feed.appendChild(post);
+    profile.appendChild(post);
 
     // if the user is logged in, we also want to handle
     // any functionality involved with the post
     if (token !== null) {
         
-        viewPostUpvotes(feed, json.meta.upvotes, numUpvotes);
-        viewPostComments(feed, json.comments, postComments);
+        viewPostUpvotes(profile, json.meta.upvotes, numUpvotes);
+        viewPostComments(profile, json.comments, postComments);
         upvotePost(json.id, upvoteButton, token);
         setupUpvoteStatus(json, token, upvoteButton); 
-        commentPost(feed, json.id, commentButton);
-        viewAuthorProfile(feed, json.meta.author, postAuthor); 
+        commentPost(profile, json.id, commentButton);
     }
 }
 

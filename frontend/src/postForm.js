@@ -14,7 +14,6 @@ export default function handlePostForm() {
     const text = postForm.elements.text.value;
     const subseddit = postForm.elements.subseddit.value;
     const image = postForm.elements.image.value;
-    const base64 = postForm.elements.base64.value;
 
     // if any fields (other than image) are empty, alert the user
     if (title === '' || text === '' || subseddit === '') {
@@ -33,6 +32,7 @@ export default function handlePostForm() {
             alert('Sorry, only png images are supported');
         // otherwise we can create a post using this iamge
         } else {
+            const base64 = postForm.elements.base64.value;
             uploadImagePost(title, text, subseddit, base64, token);
         }
     }    
