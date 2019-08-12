@@ -39,7 +39,7 @@ function setupBodyHTML() {
     // for this feed header, the first item is a title
     const feedTitle = document.createElement('h3');
     feedTitle.classList.add('feed-title', 'alt-text');
-    feedTitle.textContent = 'Popular posts';
+    feedTitle.textContent = 'Feed';
     feedHeader.appendChild(feedTitle);
 
     // the feed header also contains a post button

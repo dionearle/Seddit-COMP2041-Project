@@ -96,7 +96,12 @@ function setupPostHTML() {
     // if a user uploads an image, then we want to convert
     // this to a base64 string
     postFormImage.addEventListener('change', function(){
-        convertToBase64(postForm);
+
+        const uploadStatus = document.createElement('p');
+        uploadStatus.textContent = 'Image uploading...';
+        postForm.appendChild(uploadStatus);
+
+        convertToBase64(postForm, uploadStatus);
     });
 
     // finally we have a submit button for the form
@@ -112,7 +117,7 @@ function setupPostHTML() {
 }
 
 // helper function which converts uploaded images to base 64 format
-function convertToBase64(postForm) {
+function convertToBase64(postForm, uploadStatus) {
 
     // here we retrieve the files uploaded
     var numFiles = document.getElementById('post-form-image').files;
@@ -144,6 +149,9 @@ function convertToBase64(postForm) {
         base64.value = string;
         base64.style.display = 'none';
         postForm.appendChild(base64);
+
+        // we also notify the user that the image is now uploaded
+        uploadStatus.textContent = 'Image uploaded, ready to post!';
       }
     }
 }
